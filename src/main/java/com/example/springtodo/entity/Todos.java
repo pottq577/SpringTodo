@@ -1,5 +1,6 @@
 package com.example.springtodo.entity;
 
+import java.time.LocalDateTime;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 
@@ -7,11 +8,17 @@ import lombok.Getter;
 @AllArgsConstructor
 public class Todos {
 
-  private Long id;
+  private Long schedule_id;
   private String name;
   private String todo;
   private String password;
-  private String created_date;
-  private String updated_date;
+  private LocalDateTime created_date;
+  private LocalDateTime updated_date;
+
+  public Todos(String name, String todo, String password) {
+    this.name = name;
+    this.todo = todo;
+    this.password = password;
+  }
 
 }

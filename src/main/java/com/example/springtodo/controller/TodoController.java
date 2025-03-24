@@ -2,6 +2,8 @@ package com.example.springtodo.controller;
 
 import com.example.springtodo.dto.TodoRequestDto;
 import com.example.springtodo.dto.TodoResponseDto;
+import com.example.springtodo.service.TodoService;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -12,15 +14,21 @@ import org.springframework.web.bind.annotation.RestController;
 @RequestMapping("/api/schedules")
 public class TodoController {
 
+  private final TodoService todoService;
+
+  public TodoController(TodoService todoService) {
+    this.todoService = todoService;
+  }
+
   /**
-   * 일정 생성 메소드
+   * 일정 생성 요청을 처리하는 메소드
    *
-   * @param dto
-   * @return
+   * @param dto 요청 본문에 포함된 일정 정보 (이름, 할 일, 비밀번호)
+   * @return 일정이 생성된 후, 생성된 일정 정보를 포함하는 응답 객체
    */
   @PostMapping
   public ResponseEntity<TodoResponseDto> createTodo(@RequestBody TodoRequestDto dto) {
-    return null;
+    return new ResponseEntity<>(todoService.saveTodo(dto), HttpStatus.CREATED);
   }
 
 }
