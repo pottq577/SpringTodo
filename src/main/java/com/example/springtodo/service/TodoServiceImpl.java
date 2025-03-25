@@ -57,7 +57,7 @@ public class TodoServiceImpl implements TodoService {
    * 식별자 Id를 가진 일정을 삭제하는 메소드
    *
    * @param schedule_id URL에 저장된 일정 id
-   * @param password    사용자가 입력한 비밀번호
+   * @param dto         사용자 요청 객체
    * @throws ResponseStatusException 삭제된 행이 없을 경우 NOT FOUND 반환
    * @throws ResponseStatusException 비밀번호가 일치하지 않을 경우 BAD REQUEST 반환
    */
