@@ -21,12 +21,4 @@ public class Todos {
     this.password = password;
   }
 
-  public Todos(long scheduleId, String name, String todo, LocalDateTime createdDate,
-      LocalDateTime updatedDate) {
-    this.schedule_id = scheduleId;
-    this.name = name;
-    this.todo = todo;
-    this.created_date = createdDate;
-    this.updated_date = updatedDate;
-  }
 }

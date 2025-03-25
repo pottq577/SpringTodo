@@ -1,5 +1,6 @@
 package com.example.springtodo.repository;
 
+import com.example.springtodo.dto.TodoRequestDto;
 import com.example.springtodo.dto.TodoResponseDto;
 import com.example.springtodo.entity.Todos;
 import java.sql.ResultSet;
@@ -42,8 +43,8 @@ public class TodoRepositoryImpl implements TodoRepository {
 
     Map<String, Object> parameters = new HashMap<>();
     parameters.put("name", todos.getName());
-    parameters.put("password", todos.getPassword());
     parameters.put("todo", todos.getTodo());
+    parameters.put("password", todos.getPassword());
     parameters.put("created_date", Timestamp.valueOf(LocalDateTime.now()));
     parameters.put("updated_date", Timestamp.valueOf(LocalDateTime.now()));
     Number key = jdbcInsert.executeAndReturnKey(new MapSqlParameterSource(parameters));
@@ -52,6 +53,7 @@ public class TodoRepositoryImpl implements TodoRepository {
         key.longValue(),
         todos.getName(),
         todos.getTodo(),
+        todos.getPassword(),
         LocalDateTime.now(),
         LocalDateTime.now());
 
@@ -93,12 +95,25 @@ public class TodoRepositoryImpl implements TodoRepository {
   /**
    * 식별자 id를 가진 일정을 삭제하는 메소드
    *
-   * @param schedule_id - URL에 지정된 일정 id
+   * @param schedule_id URL에 지정된 일정 id
    * @return 쿼리의 결과로 반환된 행의 개수
    */
   @Override
   public int deleteTodo(Long schedule_id) {
     return jdbcTemplate.update("DELETE FROM schedule WHERE schedule_id = ?", schedule_id);
+  }
+
+  /**
+   * 선택 일정의 비밀번호와 사용자가 입력한 비밀번호랑 일치하는지 확인하는 메소드
+   *
+   * @param schedule_id URL에 지정된 일정 id
+   * @param dto         사용자 요청 객체
+   * @return 비밀번호가 일치하면 true
+   */
+  @Override
+  public boolean isValidPwd(Long schedule_id, TodoRequestDto dto) {
+    Todos todos = findTodoByIdOrElseThrow(schedule_id);
+    return todos.getPassword().equals(dto.getPassword());
   }
 
   private RowMapper<TodoResponseDto> todoDtoRowMapper() {
@@ -109,6 +124,7 @@ public class TodoRepositoryImpl implements TodoRepository {
             rs.getLong("schedule_id"),
             rs.getString("name"),
             rs.getString("todo"),
+            rs.getString("password"),
             rs.getTimestamp("created_date").toLocalDateTime(),
             rs.getTimestamp("updated_date").toLocalDateTime()
         );
@@ -125,6 +141,7 @@ public class TodoRepositoryImpl implements TodoRepository {
             rs.getLong("schedule_id"),
             rs.getString("name"),
             rs.getString("todo"),
+            rs.getString("password"),
             rs.getTimestamp("created_date").toLocalDateTime(),
             rs.getTimestamp("updated_date").toLocalDateTime()
         );

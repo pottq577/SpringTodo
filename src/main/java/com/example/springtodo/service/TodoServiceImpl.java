@@ -59,13 +59,21 @@ public class TodoServiceImpl implements TodoService {
    * 식별자 Id를 가진 일정을 삭제하는 메소드
    *
    * @param schedule_id URL에 저장된 일정 id
+   * @param password    사용자가 입력한 비밀번호
    * @throws ResponseStatusException 삭제된 행이 없을 경우 NOT FOUND 반환
+   * @throws ResponseStatusException 비밀번호가 일치하지 않을 경우 BAD REQUEST 반환
    */
   @Override
-  public void deleteMemo(Long schedule_id) {
-    int deletedRow = todoRepository.deleteTodo(schedule_id);
-    if (deletedRow == 0) {
-      throw new ResponseStatusException(HttpStatus.NOT_FOUND, "dose not exist id: " + schedule_id);
+  public void deleteMemo(Long schedule_id, TodoRequestDto dto) {
+    if (todoRepository.isValidPwd(schedule_id, dto)) {
+      int deletedRow = todoRepository.deleteTodo(schedule_id);
+      if (deletedRow == 0) {
+        throw new ResponseStatusException(HttpStatus.NOT_FOUND,
+            "선택한 " + schedule_id + "아이디가 존재하지 않습니다.");
+      }
+    } else {
+      throw new ResponseStatusException(HttpStatus.BAD_REQUEST,
+          "비밀번호가 일치하지 않습니다.");
     }
   }
 
