@@ -56,13 +56,13 @@ public class TodoRepositoryImpl implements TodoRepository {
   }
 
   /**
-   * DB에서 일정 정보를 모두 가져와 반환하는 메소드
+   * DB에서 수정일을 기준으로 내림차순으로 정렬된 일정 정보를 모두 가져와 반환하는 메소드
    *
    * @return schedule 테이블에 존재하는 모든 {@link TodoResponseDto} 객체의 리스트
    */
   @Override
   public List<TodoResponseDto> findAllTodos() {
-    return jdbcTemplate.query("SELECT * FROM schedule", todoRowMapper());
+    return jdbcTemplate.query("SELECT * FROM schedule ORDER BY updated_date DESC", todoRowMapper());
   }
 
   private RowMapper<TodoResponseDto> todoRowMapper() {
