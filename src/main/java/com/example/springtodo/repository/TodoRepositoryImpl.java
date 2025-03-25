@@ -4,6 +4,7 @@ import com.example.springtodo.dto.TodoResponseDto;
 import com.example.springtodo.entity.Todos;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.sql.Timestamp;
 import java.time.LocalDateTime;
 import java.util.HashMap;
 import java.util.List;
@@ -34,7 +35,6 @@ public class TodoRepositoryImpl implements TodoRepository {
    */
   @Override
   public TodoResponseDto saveTodo(Todos todos) {
-
     SimpleJdbcInsert jdbcInsert = new SimpleJdbcInsert(jdbcTemplate);
     jdbcInsert.withTableName("schedule").usingGeneratedKeyColumns("schedule_id");
 
@@ -42,30 +42,34 @@ public class TodoRepositoryImpl implements TodoRepository {
     parameters.put("name", todos.getName());
     parameters.put("password", todos.getPassword());
     parameters.put("todo", todos.getTodo());
-
+    parameters.put("created_date", Timestamp.valueOf(LocalDateTime.now()));
+    parameters.put("updated_date", Timestamp.valueOf(LocalDateTime.now()));
     Number key = jdbcInsert.executeAndReturnKey(new MapSqlParameterSource(parameters));
+
     return new TodoResponseDto(
         key.longValue(),
         todos.getName(),
         todos.getTodo(),
-        LocalDateTime.now().toString(),
-        LocalDateTime.now().toString());
+        LocalDateTime.now(),
+        LocalDateTime.now());
 
   }
 
   @Override
   public List<TodoResponseDto> findAllTodos() {
-    return jdbcTemplate.query("SELECT * FROM schedule", memoRowMapper());
+    return jdbcTemplate.query("SELECT * FROM schedule", todoRowMapper());
   }
 
-  private RowMapper<TodoResponseDto> memoRowMapper() {
+  private RowMapper<TodoResponseDto> todoRowMapper() {
     return new RowMapper<TodoResponseDto>() {
       @Override
       public TodoResponseDto mapRow(ResultSet rs, int rowNum) throws SQLException {
         return new TodoResponseDto(
             rs.getLong("schedule_id"),
             rs.getString("name"),
-            rs.getString("todo")
+            rs.getString("todo"),
+            rs.getTimestamp("created_date").toLocalDateTime(),
+            rs.getTimestamp("updated_date").toLocalDateTime()
         );
       }
     };

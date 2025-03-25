@@ -12,7 +12,7 @@ public class Todos {
   private String name;
   private String todo;
   private String password;
-  private LocalDateTime created_date;
+  private LocalDateTime created_date = LocalDateTime.now();
   private LocalDateTime updated_date;
 
   public Todos(String name, String todo, String password) {
