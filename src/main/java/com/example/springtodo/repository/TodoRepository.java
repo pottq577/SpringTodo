@@ -29,7 +29,7 @@ public interface TodoRepository {
    * 조회된 일정이 없으면 예외를 던짐
    * </p>
    *
-   * @param schedule_id URL에 지정된 사용자 id
+   * @param schedule_id URL에 지정된 일정 id
    * @return schedule 테이블에서 조회된 결과와 응답 코드를 포함하는 {@link Todos} 객체
    */
   Todos findTodoByIdOrElseThrow(Long schedule_id);

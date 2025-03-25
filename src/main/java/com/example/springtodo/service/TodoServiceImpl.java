@@ -44,7 +44,7 @@ public class TodoServiceImpl implements TodoService {
   /**
    * 식별자 Id를 가진 일정 정보를 출력하는 메소드
    *
-   * @param schedule_id URL에 지정된 사용자 id
+   * @param schedule_id URL에 지정된 일정 id
    * @return 하나의 일정 정보를 포함하는 {@link TodoResponseDto} 객체
    */
   @Override

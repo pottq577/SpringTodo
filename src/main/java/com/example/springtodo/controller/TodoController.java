@@ -55,6 +55,7 @@ public class TodoController {
     return new ResponseEntity<>(todoService.findTodoById(schedule_id), HttpStatus.OK);
   }
 
+  // 특정 조건을 만족하는 일정을 가져오도록 요청하는 메소드
 //  @GetMapping
 //  public List<TodoResponseDto> findTodos(@RequestBody TodoResponseDto dto) {
 //    return todoService.findTodos(dto.getUpdated_date(), dto.getName());

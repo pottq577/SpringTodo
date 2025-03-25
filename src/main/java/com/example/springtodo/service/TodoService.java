@@ -26,7 +26,7 @@ public interface TodoService {
   /**
    * schedule_id를 이용해서 하나의 일정을 조회하는 메소드
    *
-   * @param schedule_id URL에 지정된 사용자 id
+   * @param schedule_id URL에 지정된 일정 id
    * @return 하나의 일정 정보를 포함하는 {@link TodoResponseDto} 객체
    */
   TodoResponseDto findTodoById(Long schedule_id);

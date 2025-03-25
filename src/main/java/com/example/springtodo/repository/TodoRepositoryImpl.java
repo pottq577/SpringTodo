@@ -72,7 +72,7 @@ public class TodoRepositoryImpl implements TodoRepository {
   /**
    * 식별자 Id를 가진 일정 정보를 반환하는 메소드
    *
-   * @param schedule_id URL에 지정된 사용자 id
+   * @param schedule_id URL에 지정된 일정 id
    * @return schedule 테이블에서 조회된 결과와 응답 코드를 포함하는 {@link Todos} 객체
    */
   @Override
@@ -121,13 +121,7 @@ public class TodoRepositoryImpl implements TodoRepository {
     };
   }
 
-  /**
-   * 특정 조건을 만족하는 일정 데이터를 모두 가져와 반환하는 메소드
-   *
-   * @param updated_date 수정일
-   * @param name         작성자명
-   * @return
-   */
+  // 특정 조건을 만족하는 일정 데이터를 모두 가져와 반환하는 메소드
 //  @Override
 //  public List<TodoResponseDto> findTodos(LocalDateTime updated_date, String name) {
 //    String query = "SELECT * FROM schedule WHERE";
