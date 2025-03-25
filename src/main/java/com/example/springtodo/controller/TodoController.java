@@ -4,6 +4,7 @@ import com.example.springtodo.dto.TodoRequestDto;
 import com.example.springtodo.dto.TodoResponseDto;
 import com.example.springtodo.service.TodoService;
 import java.util.List;
+import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -16,13 +17,10 @@ import org.springframework.web.bind.annotation.RestController;
 
 @RestController
 @RequestMapping("/api/schedules")
+@RequiredArgsConstructor
 public class TodoController {
 
   private final TodoService todoService;
-
-  public TodoController(TodoService todoService) {
-    this.todoService = todoService;
-  }
 
   /**
    * 일정 생성 요청을 처리하는 메소드

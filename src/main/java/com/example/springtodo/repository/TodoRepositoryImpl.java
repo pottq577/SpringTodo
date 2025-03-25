@@ -10,6 +10,7 @@ import java.time.LocalDateTime;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.core.RowMapper;
@@ -22,13 +23,10 @@ import org.springframework.web.server.ResponseStatusException;
  * 일정 데이터 관리 Repository 구현 클래스 {@link TodoRepository} 구현
  */
 @Repository
+@RequiredArgsConstructor
 public class TodoRepositoryImpl implements TodoRepository {
 
   private final JdbcTemplate jdbcTemplate;
-
-  public TodoRepositoryImpl(JdbcTemplate jdbcTemplate) {
-    this.jdbcTemplate = jdbcTemplate;
-  }
 
   /**
    * 일정 정보를 DB에 저장 후, 일정의 ID (schedule_id)를 반환하는 메소드

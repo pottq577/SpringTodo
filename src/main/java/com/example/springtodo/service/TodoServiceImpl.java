@@ -5,6 +5,7 @@ import com.example.springtodo.dto.TodoResponseDto;
 import com.example.springtodo.entity.Todos;
 import com.example.springtodo.repository.TodoRepository;
 import java.util.List;
+import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 import org.springframework.web.server.ResponseStatusException;
@@ -13,13 +14,10 @@ import org.springframework.web.server.ResponseStatusException;
  * 일정 관리 서비스 구현 클래스 {@link TodoService} 구현
  */
 @Service
+@RequiredArgsConstructor
 public class TodoServiceImpl implements TodoService {
 
   private final TodoRepository todoRepository;
-
-  public TodoServiceImpl(TodoRepository todoRepository) {
-    this.todoRepository = todoRepository;
-  }
 
   /**
    * 일정 정보를 받아 일정을 저장하는 메소드
