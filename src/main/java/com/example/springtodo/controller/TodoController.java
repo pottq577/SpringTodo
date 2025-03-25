@@ -47,8 +47,8 @@ public class TodoController {
   /**
    * 식별자 Id를 사용해 일정 정보를 요청하는 메소드
    *
-   * @param schedule_id
-   * @return
+   * @param schedule_id URL에 지정된 사용자 id
+   * @return 조회된 일정 정보와 응답 코드를 포함하는 응답 객체
    */
   @GetMapping("/{schedule_id}")
   public ResponseEntity<TodoResponseDto> findTodoById(@PathVariable Long schedule_id) {
