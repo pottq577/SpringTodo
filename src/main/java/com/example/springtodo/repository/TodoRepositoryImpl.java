@@ -53,7 +53,6 @@ public class TodoRepositoryImpl implements TodoRepository {
         key.longValue(),
         todos.getName(),
         todos.getTodo(),
-        todos.getPassword(),
         LocalDateTime.now(),
         LocalDateTime.now());
 
@@ -124,7 +123,6 @@ public class TodoRepositoryImpl implements TodoRepository {
             rs.getLong("schedule_id"),
             rs.getString("name"),
             rs.getString("todo"),
-            rs.getString("password"),
             rs.getTimestamp("created_date").toLocalDateTime(),
             rs.getTimestamp("updated_date").toLocalDateTime()
         );

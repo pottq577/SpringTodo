@@ -25,4 +25,12 @@ public class TodoResponseDto {
     this.updated_date = todos.getUpdated_date();
   }
 
+  public TodoResponseDto(long schedule_id, String name, String todo, LocalDateTime created_date,
+      LocalDateTime updated_date) {
+    this.schedule_id = schedule_id;
+    this.name = name;
+    this.todo = todo;
+    this.created_date = created_date;
+    this.updated_date = updated_date;
+  }
 }
