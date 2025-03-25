@@ -32,7 +32,9 @@ public class TodoServiceImpl implements TodoService {
   }
 
   /**
-   * @return
+   * 저장된 일정 정보를 모두 출력하는 메소드
+   *
+   * @return 저장된 일정 정보를 포함하는 {@link TodoResponseDto} 객체 리스트
    */
   @Override
   public List<TodoResponseDto> findAllTodos() {

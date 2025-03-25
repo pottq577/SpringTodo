@@ -26,13 +26,18 @@ public class TodoController {
    * 일정 생성 요청을 처리하는 메소드
    *
    * @param dto 요청 본문에 포함된 일정 정보 (이름, 할 일, 비밀번호)
-   * @return 일정이 생성된 후, 생성된 일정 정보를 포함하는 응답 객체
+   * @return 일정이 생성된 후, 생성된 일정 정보와 응답 코드를 포함하는 응답 객체
    */
   @PostMapping
   public ResponseEntity<TodoResponseDto> createTodo(@RequestBody TodoRequestDto dto) {
     return new ResponseEntity<>(todoService.saveTodo(dto), HttpStatus.CREATED);
   }
 
+  /**
+   * 모든 일정 정보를 요청하는 메소드
+   *
+   * @return 저장된 일정을 포함하는 객체
+   */
   @GetMapping
   public List<TodoResponseDto> findAllTodos() {
     return todoService.findAllTodos();
