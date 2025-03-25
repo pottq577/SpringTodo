@@ -101,11 +101,10 @@ public class TodoRepositoryImpl implements TodoRepository {
       return findAllTodos();
     }
 
-    System.out.println("Generated Query: " + query);
+//    System.out.println("Generated Query: " + query);
 
     return jdbcTemplate.query(query, todoDtoRowMapper());
   }
-
 
   /**
    * 식별자 Id를 가진 일정 정보를 반환하는 메소드

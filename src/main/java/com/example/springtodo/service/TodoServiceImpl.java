@@ -34,7 +34,7 @@ public class TodoServiceImpl implements TodoService {
   /**
    * @return 저장된 일정 정보를 포함하는 {@link TodoResponseDto} 객체 리스트
    * @see #findTodos(TodoRequestDto)
-   * @deprecated 저장된 일정 정보를 모두 출력하는 메소드
+   * @deprecated {@code findTodos()} 메소드로 대체 사용
    */
   @Override
   public List<TodoResponseDto> findAllTodos() {
