@@ -41,4 +41,22 @@ public class TodoServiceImpl implements TodoService {
     return todoRepository.findAllTodos();
   }
 
+  /**
+   * 식별자 Id를 가진 일정 정보를 출력하는 메소드
+   *
+   * @param schedule_id
+   * @return
+   */
+
+  @Override
+  public TodoResponseDto findTodoById(Long schedule_id) {
+    Todos todos = todoRepository.findTodoByIdOrElseThrow(schedule_id);
+    return new TodoResponseDto(todos);
+  }
+
+//  @Override
+//  public List<TodoResponseDto> findTodos(LocalDateTime updated_date, String name) {
+//    return todoRepository.findTodos(updated_date, name);
+//  }
+
 }

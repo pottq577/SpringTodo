@@ -9,11 +9,13 @@ import java.time.LocalDateTime;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import org.springframework.http.HttpStatus;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.core.RowMapper;
 import org.springframework.jdbc.core.namedparam.MapSqlParameterSource;
 import org.springframework.jdbc.core.simple.SimpleJdbcInsert;
 import org.springframework.stereotype.Repository;
+import org.springframework.web.server.ResponseStatusException;
 
 /**
  * 일정 데이터 관리 Repository 구현 클래스 {@link TodoRepository} 구현
@@ -62,10 +64,33 @@ public class TodoRepositoryImpl implements TodoRepository {
    */
   @Override
   public List<TodoResponseDto> findAllTodos() {
-    return jdbcTemplate.query("SELECT * FROM schedule ORDER BY updated_date DESC", todoRowMapper());
+    return jdbcTemplate.query(
+        "SELECT * FROM schedule ORDER BY updated_date DESC",
+        todoDtoRowMapper());
   }
 
-  private RowMapper<TodoResponseDto> todoRowMapper() {
+  /**
+   * 식별자 Id를 가진 일정 정보를 반환하는 메소드
+   *
+   * @param schedule_id
+   * @return
+   */
+  @Override
+  public Todos findTodoByIdOrElseThrow(Long schedule_id) {
+    List<Todos> result = jdbcTemplate.query(
+        "SELECT * FROM schedule WHERE schedule_id = ?",
+        todoRowMapper(), schedule_id);
+
+    return result.stream()
+        .findAny()
+        .orElseThrow(
+            () -> new ResponseStatusException(
+                HttpStatus.NOT_FOUND,
+                "Does not exist id = " + schedule_id)
+        );
+  }
+
+  private RowMapper<TodoResponseDto> todoDtoRowMapper() {
     return new RowMapper<TodoResponseDto>() {
       @Override
       public TodoResponseDto mapRow(ResultSet rs, int rowNum) throws SQLException {
@@ -80,5 +105,43 @@ public class TodoRepositoryImpl implements TodoRepository {
     };
 
   }
+
+  private RowMapper<Todos> todoRowMapper() {
+    return new RowMapper<Todos>() {
+      @Override
+      public Todos mapRow(ResultSet rs, int rowNum) throws SQLException {
+        return new Todos(
+            rs.getLong("schedule_id"),
+            rs.getString("name"),
+            rs.getString("todo"),
+            rs.getTimestamp("created_date").toLocalDateTime(),
+            rs.getTimestamp("updated_date").toLocalDateTime()
+        );
+      }
+    };
+  }
+
+  /**
+   * 특정 조건을 만족하는 일정 데이터를 모두 가져와 반환하는 메소드
+   *
+   * @param updated_date 수정일
+   * @param name         작성자명
+   * @return
+   */
+//  @Override
+//  public List<TodoResponseDto> findTodos(LocalDateTime updated_date, String name) {
+//    String query = "SELECT * FROM schedule WHERE";
+//    PreparedStatement pstmt;
+//
+//    if (updated_date != null || name != null) {
+//      if (updated_date != null) {
+//      }
+//      if (name != null) {
+//      }
+//    }
+//
+//    return jdbcTemplate.query(query, todoRowMapper());
+//
+//  }
 
 }

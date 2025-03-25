@@ -16,4 +16,8 @@ public interface TodoService {
 
   List<TodoResponseDto> findAllTodos();
 
+//  List<TodoResponseDto> findTodos(LocalDateTime updated_date, String name);
+
+  TodoResponseDto findTodoById(Long schedule_id);
+
 }

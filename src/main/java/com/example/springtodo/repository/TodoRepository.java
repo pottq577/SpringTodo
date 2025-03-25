@@ -21,5 +21,8 @@ public interface TodoRepository {
    */
   List<TodoResponseDto> findAllTodos();
 
+//  List<TodoResponseDto> findTodos(LocalDateTime updated_date, String name);
+
+  Todos findTodoByIdOrElseThrow(Long schedule_id);
 
 }

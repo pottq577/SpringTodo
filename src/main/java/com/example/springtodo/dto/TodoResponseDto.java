@@ -1,5 +1,6 @@
 package com.example.springtodo.dto;
 
+import com.example.springtodo.entity.Todos;
 import java.time.LocalDateTime;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -21,6 +22,14 @@ public class TodoResponseDto {
     this.todo = todo;
     this.created_date = created_date;
     this.updated_date = updated_date;
+  }
+
+  public TodoResponseDto(Todos todos) {
+    this.schedule_id = todos.getSchedule_id();
+    this.name = todos.getName();
+    this.todo = todos.getTodo();
+    this.created_date = todos.getCreated_date();
+    this.updated_date = todos.getUpdated_date();
   }
 
 }

@@ -7,6 +7,7 @@ import java.util.List;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -42,5 +43,22 @@ public class TodoController {
   public List<TodoResponseDto> findAllTodos() {
     return todoService.findAllTodos();
   }
+
+  /**
+   * 식별자 Id를 사용해 일정 정보를 요청하는 메소드
+   *
+   * @param schedule_id
+   * @return
+   */
+  @GetMapping("/{schedule_id}")
+  public ResponseEntity<TodoResponseDto> findTodoById(@PathVariable Long schedule_id) {
+    return new ResponseEntity<>(todoService.findTodoById(schedule_id), HttpStatus.OK);
+  }
+
+//  @GetMapping
+//  public List<TodoResponseDto> findTodos(@RequestBody TodoResponseDto dto) {
+//    return todoService.findTodos(dto.getUpdated_date(), dto.getName());
+//  }
+
 
 }
