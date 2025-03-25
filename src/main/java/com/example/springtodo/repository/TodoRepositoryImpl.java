@@ -6,7 +6,9 @@ import com.example.springtodo.entity.Todos;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Timestamp;
+import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -67,6 +69,43 @@ public class TodoRepositoryImpl implements TodoRepository {
         "SELECT * FROM schedule ORDER BY updated_date DESC",
         todoDtoRowMapper());
   }
+
+  /**
+   * 특정 조건을 만족하는 일정 객체를 가져와 반환하는 메소드
+   *
+   * @param dto 사용자 요청 객체
+   * @return 특정 조건을 만족하는 모든 {@link TodoResponseDto} 객체 리스트
+   */
+  @Override
+  public List<TodoResponseDto> findTodos(TodoRequestDto dto) {
+    String query = "SELECT * FROM schedule WHERE";
+    List<String> conditions = new ArrayList<>();
+
+    String name = dto.getName();
+    LocalDate updated_date = dto.getUpdated_date();
+
+    // 이름이나 수정일 둘 중 하나만 전달받았을 때
+    if (name != null) {
+      conditions.add("name = '" + name + "'");
+    }
+    // FIXME: 와일드카드를 써야하나? 별로 안 쓰고 싶은데
+    if (updated_date != null) {
+      conditions.add("updated_date LIKE '" + updated_date + "%'");
+    }
+
+    // 이름과 수정일 둘 다 전달받았을 때
+    if (!conditions.isEmpty()) {
+      query += " " + String.join(" AND ", conditions);
+    } else {
+      // 아무것도 제공받지 않았을 때
+      return findAllTodos();
+    }
+
+    System.out.println("Generated Query: " + query);
+
+    return jdbcTemplate.query(query, todoDtoRowMapper());
+  }
+
 
   /**
    * 식별자 Id를 가진 일정 정보를 반환하는 메소드
@@ -144,22 +183,5 @@ public class TodoRepositoryImpl implements TodoRepository {
       }
     };
   }
-
-  // 특정 조건을 만족하는 일정 데이터를 모두 가져와 반환하는 메소드
-//  @Override
-//  public List<TodoResponseDto> findTodos(LocalDateTime updated_date, String name) {
-//    String query = "SELECT * FROM schedule WHERE";
-//    PreparedStatement pstmt;
-//
-//    if (updated_date != null || name != null) {
-//      if (updated_date != null) {
-//      }
-//      if (name != null) {
-//      }
-//    }
-//
-//    return jdbcTemplate.query(query, todoRowMapper());
-//
-//  }
 
 }

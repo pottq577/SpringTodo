@@ -34,13 +34,27 @@ public class TodoController {
   }
 
   /**
-   * 모든 일정 정보를 요청하는 메소드
-   *
-   * @return 저장된 일정을 포함하는 객체
+   * @return 저장된 일정을 포함하는 객체 리스트
+   * @see #findTodos(TodoRequestDto)
+   * @deprecated {@code findTodos()} 메소드로 대체 사용
+   * <p>
+   * {@link #findTodos(TodoRequestDto)} 를 사용하여 모든 일정뿐만 아니라 특정 조건을 만족하는 일정 정보를 가져옵니다.
+   * </p>
    */
-  @GetMapping
+  @GetMapping("/api/old")
   public List<TodoResponseDto> findAllTodos() {
     return todoService.findAllTodos();
+  }
+
+  /**
+   * 특정 조건을 만족하는 일정을 가져오도록 요청하는 메소드
+   *
+   * @param dto 사용자 요청 {@link TodoRequestDto} 객체
+   * @return 조건에 해당하는 일정 정보 {@link TodoResponseDto} 객체 리스트
+   */
+  @GetMapping
+  public List<TodoResponseDto> findTodos(@RequestBody TodoRequestDto dto) {
+    return todoService.findTodos(dto);
   }
 
   /**
@@ -69,12 +83,5 @@ public class TodoController {
     todoService.deleteMemo(schedule_id, dto);
     return new ResponseEntity<>(HttpStatus.OK);
   }
-
-  // 특정 조건을 만족하는 일정을 가져오도록 요청하는 메소드
-//  @GetMapping
-//  public List<TodoResponseDto> findTodos(@RequestBody TodoResponseDto dto) {
-//    return todoService.findTodos(dto.getUpdated_date(), dto.getName());
-//  }
-
 
 }

@@ -22,7 +22,13 @@ public interface TodoRepository {
    */
   List<TodoResponseDto> findAllTodos();
 
-//  List<TodoResponseDto> findTodos(LocalDateTime updated_date, String name);
+  /**
+   * 특정 조건에 맞는 일정을 가져오는 메소드
+   *
+   * @param dto 사용자 요청 객체
+   * @return 조건에 해당하는 일정 정보 {@link TodoResponseDto} 객체 리스트
+   */
+  List<TodoResponseDto> findTodos(TodoRequestDto dto);
 
   /**
    * 식별자 Id를 가진 일정 정보를 반환하는 메소드

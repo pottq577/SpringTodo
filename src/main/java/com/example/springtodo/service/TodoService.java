@@ -18,10 +18,17 @@ public interface TodoService {
    * 저장된 모든 일정을 조회하는 메소드
    *
    * @return 저장된 일정 정보를 포함하는 {@link TodoResponseDto} 객체 리스트
+   * @see #findTodos(TodoRequestDto)
    */
   List<TodoResponseDto> findAllTodos();
 
-//  List<TodoResponseDto> findTodos(LocalDateTime updated_date, String name);
+  /**
+   * 특정 조건에 맞는 일정을 가져오는 메소드
+   *
+   * @param dto 사용자 요청 객체
+   * @return 조건에 해당하는 일정 정보 {@link TodoResponseDto} 객체 리스트
+   */
+  List<TodoResponseDto> findTodos(TodoRequestDto dto);
 
   /**
    * schedule_id를 이용해서 하나의 일정을 조회하는 메소드

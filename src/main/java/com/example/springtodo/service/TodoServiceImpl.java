@@ -32,13 +32,24 @@ public class TodoServiceImpl implements TodoService {
   }
 
   /**
-   * 저장된 일정 정보를 모두 출력하는 메소드
-   *
    * @return 저장된 일정 정보를 포함하는 {@link TodoResponseDto} 객체 리스트
+   * @see #findTodos(TodoRequestDto)
+   * @deprecated 저장된 일정 정보를 모두 출력하는 메소드
    */
   @Override
   public List<TodoResponseDto> findAllTodos() {
     return todoRepository.findAllTodos();
+  }
+
+  /**
+   * 특정 조건에 맞는 일정을 가져오는 메소드
+   *
+   * @param dto 사용자 요청 객체
+   * @return 조건에 해당하는 일정 정보 {@link TodoResponseDto} 객체 리스트
+   */
+  @Override
+  public List<TodoResponseDto> findTodos(TodoRequestDto dto) {
+    return todoRepository.findTodos(dto);
   }
 
   /**
@@ -74,10 +85,5 @@ public class TodoServiceImpl implements TodoService {
           "비밀번호가 일치하지 않습니다.");
     }
   }
-
-//  @Override
-//  public List<TodoResponseDto> findTodos(LocalDateTime updated_date, String name) {
-//    return todoRepository.findTodos(updated_date, name);
-//  }
 
 }
