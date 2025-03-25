@@ -6,6 +6,7 @@ import com.example.springtodo.service.TodoService;
 import java.util.List;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -47,12 +48,24 @@ public class TodoController {
   /**
    * 식별자 Id를 사용해 일정 정보를 요청하는 메소드
    *
-   * @param schedule_id URL에 지정된 사용자 id
+   * @param schedule_id URL에 지정된 일정 id
    * @return 조회된 일정 정보와 응답 코드를 포함하는 응답 객체
    */
   @GetMapping("/{schedule_id}")
   public ResponseEntity<TodoResponseDto> findTodoById(@PathVariable Long schedule_id) {
     return new ResponseEntity<>(todoService.findTodoById(schedule_id), HttpStatus.OK);
+  }
+
+  /**
+   * 식별자 id를 사용해 일정을 삭제하는 메소드
+   *
+   * @param schedule_id URL에 지정된 일정 Id
+   * @return 응답 코드 객체
+   */
+  @DeleteMapping("/{schedule_id}")
+  public ResponseEntity<Void> deleteTodo(@PathVariable Long schedule_id) {
+    todoService.deleteMemo(schedule_id);
+    return new ResponseEntity<>(HttpStatus.OK);
   }
 
   // 특정 조건을 만족하는 일정을 가져오도록 요청하는 메소드

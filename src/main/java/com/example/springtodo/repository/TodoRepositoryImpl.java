@@ -90,6 +90,17 @@ public class TodoRepositoryImpl implements TodoRepository {
         );
   }
 
+  /**
+   * 식별자 id를 가진 일정을 삭제하는 메소드
+   *
+   * @param schedule_id - URL에 지정된 일정 id
+   * @return 쿼리의 결과로 반환된 행의 개수
+   */
+  @Override
+  public int deleteTodo(Long schedule_id) {
+    return jdbcTemplate.update("DELETE FROM schedule WHERE schedule_id = ?", schedule_id);
+  }
+
   private RowMapper<TodoResponseDto> todoDtoRowMapper() {
     return new RowMapper<TodoResponseDto>() {
       @Override

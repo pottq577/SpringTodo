@@ -31,4 +31,11 @@ public interface TodoService {
    */
   TodoResponseDto findTodoById(Long schedule_id);
 
+  /**
+   * schedule_id를 가진 일정을 삭제하는 메소드
+   *
+   * @param schedule_id URL에 저장된 일정 id
+   */
+  void deleteMemo(Long schedule_id);
+
 }
