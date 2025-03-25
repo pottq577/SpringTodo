@@ -13,4 +13,10 @@ public class TodoResponseDto {
   private String created_date;
   private String updated_date;
 
+  public TodoResponseDto(long schedule_id, String name, String todo) {
+    this.schedule_id = schedule_id;
+    this.name = name;
+    this.todo = todo;
+  }
+
 }

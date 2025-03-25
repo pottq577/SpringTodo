@@ -4,6 +4,7 @@ import com.example.springtodo.dto.TodoRequestDto;
 import com.example.springtodo.dto.TodoResponseDto;
 import com.example.springtodo.entity.Todos;
 import com.example.springtodo.repository.TodoRepository;
+import java.util.List;
 import org.springframework.stereotype.Service;
 
 /**
@@ -28,6 +29,14 @@ public class TodoServiceImpl implements TodoService {
   public TodoResponseDto saveTodo(TodoRequestDto dto) {
     Todos todos = new Todos(dto.getName(), dto.getTodo(), dto.getPassword());
     return todoRepository.saveTodo(todos);
+  }
+
+  /**
+   * @return
+   */
+  @Override
+  public List<TodoResponseDto> findAllTodos() {
+    return todoRepository.findAllTodos();
   }
 
 }

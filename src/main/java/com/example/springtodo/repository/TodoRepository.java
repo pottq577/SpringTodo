@@ -2,6 +2,7 @@ package com.example.springtodo.repository;
 
 import com.example.springtodo.dto.TodoResponseDto;
 import com.example.springtodo.entity.Todos;
+import java.util.List;
 
 public interface TodoRepository {
 
@@ -12,5 +13,13 @@ public interface TodoRepository {
    * @return 저장된 일정 정보를 포함하는 {@link TodoResponseDto} 객체
    */
   TodoResponseDto saveTodo(Todos todos);
+
+  /**
+   * 모든 일정을 가져오는 메소드
+   *
+   * @return 저장된 일정 정보를 리스트로 {@link TodoResponseDto} 객체
+   */
+  List<TodoResponseDto> findAllTodos();
+
 
 }

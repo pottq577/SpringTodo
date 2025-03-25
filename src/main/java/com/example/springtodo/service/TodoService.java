@@ -2,6 +2,7 @@ package com.example.springtodo.service;
 
 import com.example.springtodo.dto.TodoRequestDto;
 import com.example.springtodo.dto.TodoResponseDto;
+import java.util.List;
 
 public interface TodoService {
 
@@ -12,5 +13,7 @@ public interface TodoService {
    * @return 저장된 일정 정보를 가진 응답 DTO 객체
    */
   TodoResponseDto saveTodo(TodoRequestDto dto);
+
+  List<TodoResponseDto> findAllTodos();
 
 }
