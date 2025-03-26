@@ -437,12 +437,6 @@ SpringTodo/
 
 #### Response
 
-```json
-{
-  "password": "1"
-}
-```
-
 **✅ 성공 시**
 
 아무것도 반환하지 않습니다.
