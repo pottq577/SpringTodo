@@ -214,7 +214,7 @@ SpringTodo/
 
 ```json
 {
-  "schedule_id": 1
+  "updated_date": "2025-03-25"
 }
 ```
 
@@ -239,6 +239,7 @@ SpringTodo/
 
 ```json
 {
+
 }
 ```
 
