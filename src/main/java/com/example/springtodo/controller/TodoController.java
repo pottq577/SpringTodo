@@ -9,6 +9,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PatchMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -66,6 +67,21 @@ public class TodoController {
   @GetMapping("/{schedule_id}")
   public ResponseEntity<TodoResponseDto> findTodoById(@PathVariable Long schedule_id) {
     return new ResponseEntity<>(todoService.findTodoById(schedule_id), HttpStatus.OK);
+  }
+
+  /**
+   * 식별자 id를 사용해 일정 정보 수정을 요청하는 메소드
+   *
+   * @param schedule_id URL에 지정된 일정 id
+   * @param dto         사용자 요청 객체
+   * @return 수정된 일정 정보와 응답 코드를 포함하는 응답 객체
+   */
+  @PatchMapping("/{schedule_id}")
+  public ResponseEntity<TodoResponseDto> updateTodo(
+      @PathVariable Long schedule_id,
+      @RequestBody TodoRequestDto dto
+  ) {
+    return new ResponseEntity<>(todoService.updateTodo(schedule_id, dto), HttpStatus.OK);
   }
 
   /**

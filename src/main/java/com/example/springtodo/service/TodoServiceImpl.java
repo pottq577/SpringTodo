@@ -8,6 +8,7 @@ import java.util.List;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.server.ResponseStatusException;
 
 /**
@@ -65,12 +66,36 @@ public class TodoServiceImpl implements TodoService {
   }
 
   /**
+   * 식별자 id를 가진 일정을 수정하는 메소드
+   *
+   * @param schedule_id URL에 지정된 일정 id
+   * @param dto         사용자 요청 객체
+   * @return 수정된 일정 정보를 포함하는 {@link TodoResponseDto} 객체
+   * @throws ResponseStatusException 비밀번호가 일치하지 않거나 요청 데이터가 없으면 BAD REQUEST, 수정된 데이터가 없으면 NOT FOUND
+   */
+  @Transactional
+  @Override
+  public TodoResponseDto updateTodo(Long schedule_id, TodoRequestDto dto) {
+    if (todoRepository.isValidPwd(schedule_id, dto)) {
+      int updatedRow = todoRepository.updateTodo(schedule_id, dto);
+      if (updatedRow == 0) {
+        throw new ResponseStatusException(HttpStatus.NOT_FOUND, "No data has been modified.");
+      }
+
+      Todos todo = todoRepository.findTodoByIdOrElseThrow(schedule_id);
+
+      return new TodoResponseDto(todo);
+    } else {
+      throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "비밀번호가 일치하지 않습니다.");
+    }
+  }
+
+  /**
    * 식별자 Id를 가진 일정을 삭제하는 메소드
    *
    * @param schedule_id URL에 저장된 일정 id
    * @param dto         사용자 요청 객체
-   * @throws ResponseStatusException 삭제된 행이 없을 경우 NOT FOUND 반환
-   * @throws ResponseStatusException 비밀번호가 일치하지 않을 경우 BAD REQUEST 반환
+   * @throws ResponseStatusException 삭제된 행이 없을 경우 NOT FOUND, 비밀번호가 일치하지 않을 경우 BAD REQUEST
    */
   @Override
   public void deleteMemo(Long schedule_id, TodoRequestDto dto) {

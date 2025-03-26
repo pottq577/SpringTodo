@@ -39,6 +39,15 @@ public interface TodoService {
   TodoResponseDto findTodoById(Long schedule_id);
 
   /**
+   * schedule_id를 가진 일정을 수정하는 메소드
+   *
+   * @param schedule_id URL에 지정된 일정 id
+   * @param dto         사용자 요청 객체
+   * @return 수정된 일정 정보를 포함하는 {@link TodoResponseDto} 객체
+   */
+  TodoResponseDto updateTodo(Long schedule_id, TodoRequestDto dto);
+
+  /**
    * schedule_id를 가진 일정을 삭제하는 메소드
    *
    * @param schedule_id URL에 저장된 일정 id

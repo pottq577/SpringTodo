@@ -78,7 +78,7 @@ public class TodoRepositoryImpl implements TodoRepository {
    */
   @Override
   public List<TodoResponseDto> findTodos(TodoRequestDto dto) {
-    String query = "SELECT * FROM schedule WHERE";
+    String query = "SELECT * FROM schedule WHERE ";
     List<String> conditions = new ArrayList<>();
 
     String name = dto.getName();
@@ -95,7 +95,7 @@ public class TodoRepositoryImpl implements TodoRepository {
 
     // 이름과 수정일 둘 다 전달받았을 때
     if (!conditions.isEmpty()) {
-      query += " " + String.join(" AND ", conditions);
+      query += String.join(" AND ", conditions);
     } else {
       // 아무것도 제공받지 않았을 때
       return findAllTodos();
@@ -125,6 +125,41 @@ public class TodoRepositoryImpl implements TodoRepository {
                 HttpStatus.NOT_FOUND,
                 "Does not exist id = " + schedule_id)
         );
+  }
+
+  /**
+   * 식별자 id를 가진 일정 정보를 수정하는 메소드
+   *
+   * @param schedule_id URL에 지정된 일정 id
+   * @param dto         사용자 요청 객체
+   * @return 쿼리의 결과로 반환된 행의 개수
+   */
+  @Override
+  public int updateTodo(Long schedule_id, TodoRequestDto dto) {
+    String query = "UPDATE schedule SET ";
+    List<String> conditions = new ArrayList<>();
+
+    String name = dto.getName();
+    String todo = dto.getTodo();
+
+    // 이름이나 할 일을 전달받았을 때
+    if (name != null) {
+      conditions.add("name = '" + name + "'");
+    }
+    if (todo != null) {
+      conditions.add("todo = '" + todo + "'");
+    }
+
+    // 전달받은 값이 없다면 예외 발생
+    if (conditions.isEmpty()) {
+      throw new RuntimeException("입력값이 없습니다");
+    }
+
+    query += String.join(", ", conditions) + " WHERE schedule_id = " + schedule_id;
+
+//    System.out.println("Generated Query = " + query);
+
+    return jdbcTemplate.update(query);
   }
 
   /**

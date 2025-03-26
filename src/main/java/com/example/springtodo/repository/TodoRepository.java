@@ -42,6 +42,15 @@ public interface TodoRepository {
   Todos findTodoByIdOrElseThrow(Long schedule_id);
 
   /**
+   * 식별자 id를 가진 일정 정보를 수정하는 메소드
+   *
+   * @param schedule_id URL에 지정된 일정 id
+   * @param dto         사용자 요청 객체
+   * @return 쿼리의 결과로 변경된 행의 개수
+   */
+  int updateTodo(Long schedule_id, TodoRequestDto dto);
+
+  /**
    * 식별자 id를 가진 일정을 삭제하는 메소드
    *
    * @param schedule_id URL에 지정된 일정 id
