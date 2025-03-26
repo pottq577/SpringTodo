@@ -427,6 +427,14 @@ SpringTodo/
 - URL에서 `schedule_id` 를 지정합니다.
 - password(String): 일정의 비밀번호
 
+&emsp;
+
+```json
+{
+  "password": "test_pwd"
+}
+```
+
 #### Response
 
 ```json
