@@ -10,19 +10,19 @@
 4. [🌳 디렉토리 구조](#-디렉토리-구조)
 5. [📝 프로젝트 명세](#-프로젝트-명세)
 
-   5-1. [ERD]
+   5-1. [ERD](#erd)
 
-   5-2. [API 명세서]
+   5-2. [API 명세서](#api-명세서)
 
 6. [🛠️ 주요 기능](#%EF%B8%8F-주요-기능)
 
-   6-1. [일정 생성 API]
+   6-1. [일정 생성 API](#-일정-생성-api-)
 
-   6-2. [일정 조회 API]
+   6-2. [일정 조회 API](#-일정-조회-api-)
 
-   6-3. [일정 수정 API]
+   6-3. [일정 수정 API](#-일정-수정-api-)
 
-   6-4. [일정 삭제 API]
+   6-4. [일정 삭제 API](#-일정-삭제-api-)
 7. [💭 마무리](#-마무리)
 
 <br/>
@@ -97,24 +97,24 @@ SpringTodo/
     │   ├──main/java/com/example/springtodo/
     │   │   ├──controller/
     │   │   │   └──TodoController.java
-│   │   ├──dto/
+    │   │   ├──dto/
     │   │   │   ├──TodoRequestDto.java
-│   │   │   └──TodoResponseDto.java
-│   │   ├──entity/
+    │   │   │   └──TodoResponseDto.java
+    │   │   ├──entity/
     │   │   │   └──Todos.java
-│   │   ├──repository/
+    │   │   ├──repository/
     │   │   │   ├──TodoRepository.java
-│   │   │   └──TodoRepositoryImpl.java
-│   │   ├──service/
+    │   │   │   └──TodoRepositoryImpl.java
+    │   │   ├──service/
     │   │   │   ├──TodoService.java
-│   │   │   └──TodoServiceImpl.java
-│   │   └──SpringTodoApplication.java
-│   ├──main/resources
-│   │   ├──static/
-    │   │   ├──templates/
-    │   │   └──application.properties
-├── .gitignore
-└──README.md
+    │   │   │   └──TodoServiceImpl.java
+    │   │   └──SpringTodoApplication.java
+    │   ├──main/resources
+    │   │   ├──static/
+    │   │   │   ├──templates/
+    │   │   │   └──application.properties
+    ├── .gitignore
+    └──README.md
 ```
 
 <br/>
@@ -123,18 +123,28 @@ SpringTodo/
 
 ### ERD
 
-| 논리 필드명 | 물리 필드명 | 타입 | NULL 유무 | 코멘트 |
-| --- | --- | --- | --- --- |
-| 일정고유번호 | schedule_id | BIGINT | NOT NULL | 일정 식별자 ID
-| 작성자명 | name | VARCHAR(10) | NOT NULL | 클라이언트 이름
-| 일정 내용 | todo | TEXT | NOT NULL | 일정 내용
-| 비밀번호 | password | VARCHAR(20) | NOT NULL | 클라이언트 비밀번호
-| 작성일 | created_date | TIMESTAMP | NOT NULL | 일정 등록 날짜
-| 수정일 | updated_date | TIMESTAMP | NULL | 일정 수정 날짜
+| 논리 필드명 | 물리 필드명       | 타입          | NULL 유무  | 코멘트        |
+|--------|--------------|-------------|----------|------------
+| 일정고유번호 | schedule_id  | BIGINT      | NOT NULL | 일정 식별자 ID  
+| 작성자명   | name         | VARCHAR(10) | NOT NULL | 클라이언트 이름   
+| 일정 내용  | todo         | TEXT        | NOT NULL | 일정 내용      
+| 비밀번호   | password     | VARCHAR(20) | NOT NULL | 클라이언트 비밀번호 
+| 작성일    | created_date | TIMESTAMP   | NOT NULL | 일정 등록 날짜   
+| 수정일    | updated_date | TIMESTAMP   | NULL     | 일정 수정 날짜   
 
 [🛢️ ERDCloud 에서 보기](https://www.erdcloud.com/d/u5jdt6kexpaeH7i2p)
 
 ### API 명세서
+
+| 기능       | Method | API Path                    | Parameters                                  | Request Body                                                                               | Response                                                                                                                                                                                                                           
+|----------|--------|-----------------------------|---------------------------------------------|--------------------------------------------------------------------------------------------|------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+| 일정 생성    | POST   | api/schedules               | X                                           | {<br/>&emsp;"name": String,<br/>&emsp; "todo": String,<br/>&emsp; "password": String<br/>} | {<br/>&emsp;"schedule_id": Long,<br/>&emsp;"name": String,<br/>&emsp;"todo": String,<br/>&emsp;"created_date": String,<br/>&emsp;"updated_date": String<br/>}                                                                      
+| 전체 일정 조회 | GET    | api/schedules               | Query: `updated_date`<br/>e.g. "2025-03-25" | X                                                                                          | [<br/>&emsp;{<br/>&emsp;&emsp;"schedule_id": Long,<br/>&emsp;&emsp;"name": String,<br/>&emsp;&emsp;"todo": String,<br/>&emsp;&emsp;"created_date": String,<br/>&emsp;&emsp;"updated_date": String<br/>&emsp;},<br/>&emsp;...<br/>] 
+| 선택 일정 조회 | GET    | api/schedules/{schedule_id} | Path: `schedule_id`                         | X                                                                                          | {<br/>&emsp;"schedule_id": Long,<br/>&emsp;"name": String,<br/>&emsp;"todo": String,<br/>&emsp;"created_date": String,<br/>&emsp;"updated_date": String<br/>}                                                                      
+| 선택 일정 수정 | PATCH  | api/schedules/{schedule_id} | Path: `schedule_id`                         | {<br/>&emsp;"name": String,<br/>&emsp;"todo": String,<br/>&emsp;"password": String<br/>}   | {<br/>&emsp;"schedule_id": Long,<br/>&emsp;"name": String,<br/>&emsp;"todo": String,<br/>&emsp;"created_date": String,<br/>&emsp;"updated_date": String<br/>}                                                                      
+| 선택 일정 삭제 | DELETE | api/schedules/{schedule_id} | Path: `schdule_id`<br/>Query: `password`    | X                                                                                          | {<br/>&emsp;"message": String<br/>}                                                                                                                                                                                                
+
+자세한 내용은 아래 노션에서 확인해주세요.
 
 [📓 Notion 에서 보기](https://legendary-jaguar-30f.notion.site/Schedule-API-Spec-1bd65d3c37e5802f93f6d3dcd07602ae)
 
